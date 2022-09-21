@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import useEventListener from './useEventListener'
 import words from './words.json'
+import Keyboard from 'react-simple-keyboard'
+import 'react-simple-keyboard/build/css/index.css'
 
 const solution = words[Math.round(Math.random() * 635)].toUpperCase()
 
@@ -13,6 +15,10 @@ const App = () => {
   }, [])
 
   useEventListener('keydown', e => {
+    handleKey()
+  })
+
+  const handleKey = e => {
     if (start <= 26 || win) {
       if (
         (e.keyCode >= 65 && e.keyCode <= 90) ||
@@ -60,11 +66,58 @@ const App = () => {
         }
       }
     }
-  })
+  }
+
+  const handleKeyVirtual = button => {
+    if (start <= 26 || win) {
+      if (button !== '{enter}' || button !== '{backspace}') {
+        for (let i = start; i < start + 5; i++) {
+          if (document.getElementById(i.toString()).value === '') {
+            document.getElementById(i.toString()).value = button.toUpperCase()
+            break
+          }
+        }
+      }
+      if (button === '{enter}') {
+        let canSubmit = true
+        for (let i = start; i < start + 5; i++) {
+          if (document.getElementById(i.toString()).value === '')
+            canSubmit = false
+        }
+        if (canSubmit) {
+          let index = 0
+          let correct = 0
+          for (let i = start; i < start + 5; i++) {
+            if (
+              document.getElementById(i.toString()).value === solution[index]
+            ) {
+              document.getElementById(i.toString()).classList.add('green')
+              correct++
+            } else if (
+              solution.includes(document.getElementById(i.toString()).value)
+            )
+              document.getElementById(i.toString()).classList.add('yellow')
+            else document.getElementById(i.toString()).classList.add('gray')
+            index++
+          }
+          if (correct === 5) setWin(true)
+          setStart(prev => prev + 5)
+        }
+      }
+      if (button === '{backspace}') {
+        for (let i = start + 4; i >= start; i--) {
+          if (document.getElementById(i.toString()).value !== '') {
+            document.getElementById(i.toString()).value = ''
+            break
+          }
+        }
+      }
+    }
+  }
 
   const getInput = id => (
     <input
-      className='border-2 w-16 h-16 focus:outline-0 text-2xl font-semibold text-center bg-white'
+      className='border-2 w-8 sm:w-16 h-8 sm:h-16 focus:outline-0 text-2xl font-semibold text-center bg-white'
       maxLength={1}
       disabled
       id={id}
@@ -72,14 +125,14 @@ const App = () => {
   )
 
   const getWordField = arr => (
-    <div className='flex items-center justify-center gap-1 mb-1'>
+    <div className='flex items-center justify-center space-x-1 mb-1'>
       {arr.map(item => getInput(item))}
     </div>
   )
 
   return (
-    <main className='p-5 mt-10'>
-      <h1 className='text-center mb-5 font-semibold text-3xl uppercase'>
+    <main className='p-5 mt-0 sm:mt-10'>
+      <h1 className='text-center mb-5 font-semibold text-2xl sm:text-3xl uppercase'>
         Guess the Word!
       </h1>
       <section>
@@ -98,6 +151,22 @@ const App = () => {
             !win &&
             `You Lose! The word was ${solution.toLowerCase()}! Click to play again!`}
         </p>
+        <div className='block sm:hidden mt-5'>
+          <Keyboard
+            layout={{
+              default: [
+                'q w e r t y u i o p {backspace}',
+                'a s d f g h j k l',
+                'z x c v b n m {enter}',
+              ],
+            }}
+            display={{
+              '{backspace}': 'bksp',
+              '{enter}': 'Enter',
+            }}
+            onKeyPress={button => handleKeyVirtual(button)}
+          />
+        </div>
       </section>
     </main>
   )
