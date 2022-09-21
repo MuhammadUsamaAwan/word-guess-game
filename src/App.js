@@ -75,8 +75,7 @@ const App = () => {
             break
           }
         }
-      }
-      if (button === '{enter}') {
+      } else if (button === '{enter}') {
         let canSubmit = true
         for (let i = start; i < start + 5; i++) {
           if (document.getElementById(i.toString()).value === '')
@@ -101,8 +100,7 @@ const App = () => {
           if (correct === 5) setWin(true)
           setStart(prev => prev + 5)
         }
-      }
-      if (button === '{backspace}') {
+      } else if (button === '{backspace}') {
         for (let i = start + 4; i >= start; i--) {
           if (document.getElementById(i.toString()).value !== '') {
             document.getElementById(i.toString()).value = ''
@@ -115,7 +113,7 @@ const App = () => {
 
   const getInput = id => (
     <input
-      className='border-2 w-8 sm:w-16 h-8 sm:h-16 focus:outline-0 text-2xl font-semibold text-center bg-white'
+      className='border-2 w-11 h-11 sm:w-16 sm:h-16 focus:outline-0 text-2xl font-semibold text-center bg-white'
       maxLength={1}
       disabled
       id={id}
