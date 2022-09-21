@@ -147,7 +147,7 @@ const App = () => {
             !win &&
             `You Lose! The word was ${solution.toLowerCase()}! Click to play again!`}
         </p>
-        <div className='block mt-5'>
+        <div className='md:block lg:hidden mt-5'>
           <Keyboard
             layout={{
               default: [
