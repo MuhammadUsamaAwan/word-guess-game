@@ -35,9 +35,6 @@ const App = () => {
           let index = 0
           let correct = 0
           for (let i = start; i < start + 5; i++) {
-            console.log(
-              document.getElementById(i.toString()).value === solution[index]
-            )
             if (
               document.getElementById(i.toString()).value === solution[index]
             ) {
@@ -98,6 +95,7 @@ const App = () => {
         >
           {win && 'Congratulations you won! Click to play again!'}
           {start > 26 &&
+            !win &&
             `You Lose! The word was ${solution.toLowerCase()}! Click to play again!`}
         </p>
       </section>
