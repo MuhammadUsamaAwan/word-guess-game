@@ -72,7 +72,7 @@ const App = () => {
   )
 
   const getWordField = arr => (
-    <div className='flex items-center justify-center gap-1 mb-2'>
+    <div className='flex items-center justify-center gap-1 mb-1'>
       {arr.map(item => getInput(item))}
     </div>
   )
@@ -90,7 +90,7 @@ const App = () => {
         {getWordField([21, 22, 23, 24, 25])}
         {getWordField([26, 27, 28, 29, 30])}
         <p
-          className='text-center cursor-pointer'
+          className='text-center cursor-pointer mt-2'
           onClick={() => window.location.reload()}
         >
           {win && 'Congratulations you won! Click to play again!'}
