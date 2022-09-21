@@ -52,7 +52,7 @@ const App = () => {
         }
       }
       if (e.keyCode === 8) {
-        for (let i = start + 5; i >= start; i--) {
+        for (let i = start + 4; i >= start; i--) {
           if (document.getElementById(i.toString()).value !== '') {
             document.getElementById(i.toString()).value = ''
             break
