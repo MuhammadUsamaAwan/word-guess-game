@@ -15,7 +15,7 @@ const App = () => {
   }, [])
 
   useEventListener('keydown', e => {
-    handleKey()
+    handleKey(e)
   })
 
   const handleKey = e => {
@@ -30,8 +30,7 @@ const App = () => {
             break
           }
         }
-      }
-      if (e.keyCode === 13) {
+      } else if (e.keyCode === 13) {
         let canSubmit = true
         for (let i = start; i < start + 5; i++) {
           if (document.getElementById(i.toString()).value === '')
@@ -56,8 +55,7 @@ const App = () => {
           if (correct === 5) setWin(true)
           setStart(prev => prev + 5)
         }
-      }
-      if (e.keyCode === 8) {
+      } else if (e.keyCode === 8) {
         for (let i = start + 4; i >= start; i--) {
           if (document.getElementById(i.toString()).value !== '') {
             document.getElementById(i.toString()).value = ''
@@ -70,7 +68,7 @@ const App = () => {
 
   const handleKeyVirtual = button => {
     if (start <= 26 || win) {
-      if (button !== '{enter}' || button !== '{backspace}') {
+      if (button !== '{enter}' && button !== '{backspace}') {
         for (let i = start; i < start + 5; i++) {
           if (document.getElementById(i.toString()).value === '') {
             document.getElementById(i.toString()).value = button.toUpperCase()
@@ -151,7 +149,7 @@ const App = () => {
             !win &&
             `You Lose! The word was ${solution.toLowerCase()}! Click to play again!`}
         </p>
-        <div className='block sm:hidden mt-5'>
+        <div className='block mt-5'>
           <Keyboard
             layout={{
               default: [
