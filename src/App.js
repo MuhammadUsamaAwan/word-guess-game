@@ -19,7 +19,7 @@ const App = () => {
   })
 
   const handleKey = e => {
-    if (start <= 26 || win) {
+    if (!win && start <= 26) {
       if (
         (e.keyCode >= 65 && e.keyCode <= 90) ||
         (e.keyCode >= 95 && e.keyCode <= 122)
@@ -63,11 +63,15 @@ const App = () => {
           }
         }
       }
+    } else {
+      if (e.keyCode === 13) {
+        window.location.reload()
+      }
     }
   }
 
   const handleKeyVirtual = button => {
-    if (start <= 26 || win) {
+    if (!win && start <= 26) {
       if (button !== '{enter}' && button !== '{backspace}') {
         for (let i = start; i < start + 5; i++) {
           if (document.getElementById(i.toString()).value === '') {
@@ -107,6 +111,10 @@ const App = () => {
             break
           }
         }
+      }
+    } else {
+      if (button === '{enter}') {
+        window.location.reload()
       }
     }
   }
